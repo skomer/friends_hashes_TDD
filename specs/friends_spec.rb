@@ -1,5 +1,6 @@
 require 'pry-byebug'
 require( 'minitest/autorun' )
+require( 'minitest/rg' )
 require_relative( '../friends' )
 
 class TestFriends < MiniTest::Test
@@ -79,11 +80,13 @@ class TestFriends < MiniTest::Test
     assert_equal(true, favourite_foods_result)
   end
 
+  # Amend test as per notes in friends.rb file
   def test_add_friend
     add_friend_result = add_friend(@person2, "Mick Jagger")
     assert_equal(true, add_friend_result.include?("Mick Jagger"))
   end
 
+  # Mildly flawed test as per notes in friends.rb file
   def test_remove_friend
     remove_friend_result = remove_friend(@person1, "Keith")
     # binding.pry
@@ -117,18 +120,3 @@ class TestFriends < MiniTest::Test
   end
 
 end
-
-
-
-# hash_of_people_tv = {
-#   "tv show 1" => [ "person1", "person2", "person3"],
-#   "tv show 2" => ["person2", "person5"]
-# }
-
-# real_tv_hash = {
-#   "Scrubs" => ["Jay", "Marc"],
-#   "Pokemon" => ["Val", "Keith"]
-# }
-
-
-

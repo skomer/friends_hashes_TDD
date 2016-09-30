@@ -17,6 +17,8 @@ end
 
 # 3. Allow a new friend to be added to a given person
 
+# Amend to properly test whether the function actually appends the friend to the array.
+# As it is, the test would pass if another friend named "Mick Jagger" were already in the array, but the function added nothing
 def add_friend(person, friend)
   return person[:friends].push(friend)
 end
@@ -24,6 +26,8 @@ end
 
 # 4. Allow a friend to be removed from a given person
 
+# Flawed because the [:friends] array could include more than one friend with the same name.
+# You would only want to remove one of them, not all.
 def remove_friend(person, friend)
   # binding.pry
   person[:friends].delete(friend)
@@ -64,6 +68,7 @@ end
 
 # 8. Find people with no friends
 
+# .empty? is perhaps better to use?
 def no_friends(people)
   no_friends = []
   for person in people
@@ -79,26 +84,20 @@ end
 # Find the people who have the same favourite tv show
 
 def same_tv_show(people)
-  people_and_their_shows = {}
+  people_and_their_shows = []
   for person in people
-    people_and_their_shows[person[:name]] = person[:favourites][:tv_show]
+    people_and_their_shows.push({
+      person[:favourites][:tv_show]=> person[:name]
+    })
   end
-  binding.pry
-  
-
+  # The next line of code was made possible by glenn mcdonald's answer here:
+  # http://stackoverflow.com/questions/5490952/merge-array-of-hashes-to-get-hash-of-arrays-of-values?rq=1
+  merged_people_and_shows = people_and_their_shows.reduce({}) {|h,pairs| pairs.each {|k,v| (h[k] ||= []) << v}; h}
+  # binding.pry
+  merged_people_and_shows.each do |key, value|
+    # binding.pry
+    if value.length < 2
+      merged_people_and_shows.delete(key)
+    end
+  end
 end
-
-
-# { "Rick" => "Friends", "Jay" => "Scrubs", "bla" => "Friends" }
-
-
-
-
-
-
-
-
-
-
-
-
